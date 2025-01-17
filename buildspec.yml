@@ -1,36 +1,44 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
+    DOCKER_REGISTRY_URL: /myapp/docker-registry/url
+
 phases:
   install:
+    runtime-versions:
+      nodejs: 16
     commands:
-      - echo Installing Docker...
-      # Install Docker (if it's not already available in the build environment)
-      - curl -fsSL https://get.docker.com -o get-docker.sh
-      - sudo sh get-docker.sh
-      # Log in to Amazon ECR using the recommended method
-      - echo Logging into Amazon ECR...
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-
+      - n 16
+      - npm install -g npm@latest
+      
   pre_build:
     commands:
-      - echo Preparing to build the Docker image...
-      # Build the Docker image using the Dockerfile in the root of the repository
-      - docker build -t react-app .
-
+      - echo Logging in to Docker Registry...
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - IMAGE_REPO_NAME="react-app"
+      - IMAGE_NAME="$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/$IMAGE_REPO_NAME"
+      - IMAGE_TAG=v1
+      
   build:
     commands:
-      - echo Tagging the Docker image...
-      # Tag the built Docker image for ECR
-      - docker tag react-app:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/react-app:latest
-
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_NAME:latest .
+      - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
+      
   post_build:
     commands:
-      - echo Pushing Docker image to ECR...
-      # Push the tagged Docker image to the Amazon ECR repository
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/react-app:latest
-
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $IMAGE_NAME:latest
+      - docker push $IMAGE_NAME:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '{"ImageURI":"%s"}' $IMAGE_NAME:$IMAGE_TAG > imageDefinitions.json
+      - cat imageDefinitions.json
+      
 artifacts:
   files:
-    - appspec.yml
-    - scripts/**
-    - Dockerfile
+    - '**/*'
