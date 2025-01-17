@@ -16,7 +16,7 @@ phases:
       - chmod +x /usr/local/bin/n
       - n 16
       - npm config set registry https://registry.npmjs.org/
-      - sudo npm install -g npm@latest
+      - curl -L https://www.npmjs.com/install.sh | sudo bash
       
   pre_build:
     commands:
