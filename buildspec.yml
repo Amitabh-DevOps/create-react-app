@@ -12,7 +12,7 @@ phases:
       nodejs: 16
     commands:
       - n 16
-      - npm install -g npm@latest
+      - sudo npm install -g npm@latest
       
   pre_build:
     commands:
