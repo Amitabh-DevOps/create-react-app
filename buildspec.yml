@@ -1,0 +1,34 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+    commands:
+      - echo Installing dependencies...
+      # Log in to Amazon ECR (Elastic Container Registry) to allow pushing images
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+
+  pre_build:
+    commands:
+      - echo Preparing to build the Docker image...
+      # Build the Docker image using the provided Dockerfile in the root of the repository
+      - docker build -t react-app .
+
+  build:
+    commands:
+      - echo Tagging the Docker image...
+      # Tag the built Docker image for ECR
+      - docker tag react-app:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/react-app:latest
+
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR...
+      # Push the tagged Docker image to the Amazon ECR repository
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/react-app:latest
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**
+    - Dockerfile
