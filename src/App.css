@@ -1,53 +1,59 @@
-/* General styles for the App */
 .App {
   text-align: center;
-  background-color: #f0f2f5;
-  padding: 20px;
 }
 
-/* Styling for the React logo image */
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-  transition: transform 1s ease-in-out;
+.hero-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Adding animation if user prefers no reduced motion */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.feature-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: white;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styles */
-.App-header {
-  background-color: #282c34;
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-container {
+  display: inline-flex;
+  padding: 1rem;
+  background: #f5f3ff;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-section {
+  background-color: #f5f3ff;
+  padding: 6rem 1.5rem;
+}
+
+.button {
+  display: inline-flex;
   align-items: center;
-  font-size: calc(10px + 2vmin);
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-/* Link styles */
-.App-link {
-  color: #61dafb;
-  text-decoration: none;
-  font-weight: bold;
+.button-primary {
+  background-color: #7c3aed;
+  color: white;
 }
 
-.App-link:hover {
-  text-decoration: underline;
+.button-primary:hover {
+  background-color: #6d28d9;
 }
 
-/* Keyframe animation for spinning the logo */
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button-white {
+  background-color: white;
+  color: #7c3aed;
+}
+
+.button-white:hover {
+  background-color: #f9fafb;
 }
