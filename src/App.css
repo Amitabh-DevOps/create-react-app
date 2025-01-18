@@ -2,58 +2,37 @@
   text-align: center;
 }
 
-.hero-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.feature-card {
-  padding: 2rem;
-  border-radius: 1rem;
-  background: white;
-  transition: transform 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.icon-container {
-  display: inline-flex;
-  padding: 1rem;
-  background: #f5f3ff;
-  border-radius: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.cta-section {
-  background-color: #f5f3ff;
-  padding: 6rem 1.5rem;
-}
-
-.button {
-  display: inline-flex;
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 0.75rem 2rem;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.button-primary {
-  background-color: #7c3aed;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.button-primary:hover {
-  background-color: #6d28d9;
+.App-link {
+  color: #61dafb;
 }
 
-.button-white {
-  background-color: white;
-  color: #7c3aed;
-}
-
-.button-white:hover {
-  background-color: #f9fafb;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
